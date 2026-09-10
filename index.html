@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="q1mMu59Up2U8ZXUWnVZwCI">
+<head data-page-node-id="3o1HDhqYbczkNskuAvx1ET">
+<meta charset="UTF-8" data-page-node-id="hiYJSzVQcEV1iwEi1uSeuh">
+<!-- 移动端优先：禁止缩放，viewport-fit=cover 适配 iPhone 刘海/安全区 -->
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" data-page-node-id="r9LIOfkLMtYYNKJe6mAOSa">
+<title>小圈 · 生活小本子</title>
+
+<!-- PWA 相关 -->
+<link rel="manifest" href="./manifest.json" data-page-node-id="9ESBa66px0VVUNgVLBx3dT">
+<meta name="theme-color" content="#FF9FB6" data-page-node-id="aQzSRvYWjp3MCjlc1q7Z97">
+<meta name="apple-mobile-web-app-capable" content="yes" data-page-node-id="xChW9n1kQwgTYfaJef32xH">
+<meta name="mobile-web-app-capable" content="yes" data-page-node-id="Cbf7CqT2er3E3PfZ0EgvWt">
+<meta name="apple-mobile-web-app-status-bar-style" content="default" data-page-node-id="7pPbEqCsY9PNEwhsqnHiuf">
+<meta name="apple-mobile-web-app-title" content="小圈" data-page-node-id="NSoKKjUk5LP2OlbYgOG4sL">
+<link rel="apple-touch-icon" href="./icons/icon-192.png" data-page-node-id="rgaeoomUDlrwOFb7LhF0VP">
+<link rel="icon" href="./icons/icon-192.png" data-page-node-id="CJaT10AGGWpDLrnAo7UuLE">
+
+<!-- 图标说明：manifest 使用 512×512 PNG（./icons/icon-512.png），之后可直接替换同名文件换成自己的图标 -->
+
+<style>
+/* ===================== 基础与主题 ===================== */
+:root{
+  --bg:#FFF7FA; --card:#FFFFFF; --text:#4B4453; --muted:#9C94A6; --line:#F2ECF1;
+  --pink:#FF9FB6; --pink-s:#FFE6ED; --blue:#8FD3F4; --blue-s:#E4F4FD;
+  --mint:#A9E5C8; --mint-s:#E3F7EE; --yellow:#FFDE96; --yellow-s:#FFF5DC;
+  --purple:#CFC2FF; --purple-s:#EFEBFF; --danger:#FF8A8A;
+  --r:20px; --sd:0 6px 18px rgba(255,159,182,.13);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.5; overscroll-behavior-y:none;
+}
+button,input,select,textarea{font-family:inherit;font-size:15px;color:inherit;}
+button{border:0;background:none;padding:0;cursor:pointer;}
+h2,h3,h4{margin:0;}
+ul{margin:0;padding:0;list-style:none;}
+img{display:block;max-width:100%;}
+.hidden{display:none !important;}
+
+/* ===================== 布局 ===================== */
+.app{max-width:520px;margin:0 auto;padding:0 14px calc(88px + env(safe-area-inset-bottom));}
+.topbar{
+  position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;
+  padding:calc(12px + env(safe-area-inset-top)) 4px 10px;
+  background:linear-gradient(180deg,var(--bg) 70%,rgba(255,247,250,0));
+}
+.topbar .logo{width:30px;height:30px;}
+.topbar h1{font-size:18px;margin:0;letter-spacing:.5px;}
+.topbar .tag{margin-left:auto;font-size:12px;color:var(--muted);}
+
+/* ===================== 卡片 / 通用 ===================== */
+.card{
+  background:var(--card);border-radius:var(--r);padding:14px;margin-bottom:12px;
+  box-shadow:var(--sd);
+}
+.card.soft{background:linear-gradient(180deg,#fff,#FFF8FB);}
+.row{display:flex;align-items:center;gap:8px;}
+.row.between{justify-content:space-between;}
+h3{font-size:15px;}
+.sub,.tip{color:var(--muted);font-size:12.5px;margin:4px 0 0;}
+.mt8{margin-top:8px;}.mt12{margin-top:12px;}
+.chip{
+  display:inline-block;font-size:11px;padding:2px 8px;border-radius:99px;
+  background:var(--pink-s);color:#E4728F;
+}
+.chip.b{background:var(--blue-s);color:#4AA3D0;}
+.chip.m{background:var(--mint-s);color:#4BAE85;}
+.chip.y{background:var(--yellow-s);color:#C79A32;}
+.chip.p{background:var(--purple-s);color:#8778D8;}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:4px;
+  padding:10px 14px;border-radius:14px;background:var(--pink);color:#fff;
+  font-size:14px;font-weight:600;box-shadow:0 4px 10px rgba(255,159,182,.32);
+}
+.btn:active{transform:scale(.97);}
+.btn.ghost{background:#fff;color:var(--text);box-shadow:inset 0 0 0 1.5px var(--line);}
+.btn.danger{background:#fff;color:var(--danger);box-shadow:inset 0 0 0 1.5px #FFD9D9;}
+.btn.mini{padding:6px 12px;font-size:13px;border-radius:12px;}
+.btn.full{width:100%;}
+.btn.big{padding:16px;font-size:17px;border-radius:18px;}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.btnrow .btn{flex:1 1 46%;}
+.link{font-size:12.5px;color:var(--muted);padding:4px 6px;}
+.link.del{color:var(--danger);}
+.empty{text-align:center;color:var(--muted);font-size:13px;padding:18px 0;}
+
+input[type=text],input[type=number],input[type=date],select,textarea{
+  width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:14px;
+  background:#FFFDFE;outline:none;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--pink);}
+.field{margin-bottom:10px;}
+.field label{display:block;font-size:12.5px;color:var(--muted);margin:0 0 5px 4px;}
+
+/* 分段选择 */
+.seg{display:flex;background:#F7F2F6;border-radius:14px;padding:3px;gap:3px;}
+.seg button{flex:1;padding:8px 0;border-radius:11px;font-size:13.5px;color:var(--muted);}
+.seg button.on{background:#fff;color:var(--text);font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.06);}
+.chips{display:flex;flex-wrap:wrap;gap:7px;}
+.chips button{padding:7px 13px;border-radius:99px;background:#F7F2F6;font-size:13px;color:var(--muted);}
+.chips button.on{background:var(--pink-s);color:#E4728F;font-weight:600;}
+
+/* 开关 */
+.sw{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+.sw input{display:none;}
+.sw i{width:38px;height:22px;border-radius:99px;background:#E9E2EA;position:relative;transition:.2s;}
+.sw i::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.18);}
+.sw input:checked + i{background:var(--pink);}
+.sw input:checked + i::after{left:18px;}
+
+/* ===================== 首页 ===================== */
+.hi{display:flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,#FFEFF4,#F1F8FF);}
+.hi h2{font-size:19px;}
+.hi .mascot{margin-left:auto;flex:none;}
+.mascot{width:88px;height:88px;cursor:pointer;animation:bob 2.6s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.mascot:active{transform:scale(.92);}
+.bubble{
+  position:relative;margin:-4px 0 12px;padding:11px 14px;border-radius:16px;
+  background:#fff;box-shadow:var(--sd);font-size:13.5px;color:#6B6478;
+}
+.bubble::before{content:"";position:absolute;top:-7px;right:38px;border:7px solid transparent;border-bottom-color:#fff;border-top:0;}
+
+/* 日历 */
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.cal-head .ym{font-size:16px;font-weight:700;}
+.cal-head button{width:30px;height:30px;border-radius:50%;background:#F7F2F6;color:var(--muted);font-size:15px;}
+.cal-week,.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-week div{text-align:center;font-size:11.5px;color:var(--muted);padding:4px 0;}
+.cal-grid .cell{
+  position:relative;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;
+  border-radius:12px;font-size:14px;
+}
+.cal-grid .cell.empty{visibility:hidden;}
+.cal-grid .cell.today{box-shadow:inset 0 0 0 1.5px var(--pink);color:#E4728F;font-weight:700;}
+.cal-grid .cell.sel{background:var(--pink);color:#fff;font-weight:700;}
+.cal-grid .cell .dot{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--pink);}
+.cal-grid .cell.sel .dot{background:#fff;}
+
+/* 列表项 */
+.item{
+  display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line);
+}
+.item:first-child{border-top:0;}
+.thumb{
+  width:52px;height:52px;flex:none;border-radius:16px;background:var(--pink-s) center/cover no-repeat;
+  display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;
+}
+.thumb.b{background-color:var(--blue-s);}
+.thumb.m{background-color:var(--mint-s);}
+.thumb.y{background-color:var(--yellow-s);}
+.item .grow{flex:1;min-width:0;}
+.item .t{font-size:14.5px;font-weight:600;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.item .s{font-size:12.5px;color:var(--muted);margin-top:2px;}
+.item .s b{color:var(--pink);font-size:14px;}
+.item-foot{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap;}
+
+/* 底部导航 */
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;
+  max-width:520px;margin:0 auto;padding:6px 6px calc(6px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);border-radius:20px 20px 0 0;
+}
+.tabbar button{flex:1;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font-size:11px;}
+.tabbar button .ic{font-size:20px;line-height:1;}
+.tabbar button.on{color:var(--pink);font-weight:700;}
+
+/* ===================== 食谱 ===================== */
+.roll{
+  text-align:center;padding:18px 10px;border-radius:18px;
+  background:linear-gradient(135deg,#FFF3E6,#FFEAF1);
+}
+.roll .res{font-size:22px;font-weight:800;margin:6px 0 2px;word-break:break-all;}
+.roll .resimg{width:120px;height:120px;border-radius:22px;margin:8px auto;background:#fff center/cover no-repeat;
+  display:flex;align-items:center;justify-content:center;font-size:52px;box-shadow:var(--sd);}
+.foodgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:10px;}
+.food{background:#FFF9FB;border-radius:16px;padding:9px 6px;text-align:center;font-size:12.5px;position:relative;overflow:hidden;}
+.food .fi{width:100%;aspect-ratio:1/1;border-radius:12px;background:#fff center/cover no-repeat;
+  display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:5px;}
+.food .x{position:absolute;top:3px;right:5px;font-size:13px;color:var(--muted);}
+
+/* ===================== 记账 ===================== */
+.sum{display:flex;gap:8px;text-align:center;}
+.sum div{flex:1;background:#FFF9FB;border-radius:16px;padding:10px 4px;}
+.sum .n{font-size:17px;font-weight:800;}
+.sum .l{font-size:11.5px;color:var(--muted);}
+.in{color:#4BAE85;} .out{color:#F0839C;}
+.bar{height:10px;border-radius:99px;background:var(--mint-s);overflow:hidden;margin-top:10px;}
+.bar i{display:block;height:100%;background:var(--pink);border-radius:99px;}
+
+/* ===================== 英语 ===================== */
+.wcard{text-align:center;padding:22px 12px;border-radius:20px;background:linear-gradient(135deg,#EEF6FF,#F6F0FF);}
+.wcard .w{font-size:32px;font-weight:800;letter-spacing:.5px;word-break:break-all;}
+.wcard .ph{color:var(--muted);font-size:13px;margin-top:2px;}
+.wcard .cn{font-size:19px;font-weight:700;margin-top:10px;}
+.wcard .ex{margin-top:10px;font-size:13.5px;color:#6B6478;}
+.wcard .ex small{display:block;color:var(--muted);margin-top:2px;}
+.opt{display:block;width:100%;text-align:left;padding:12px 14px;border-radius:14px;background:#FFF9FB;margin-top:8px;font-size:14px;}
+.opt.right{background:var(--mint-s);color:#3E9C74;}
+.opt.wrong{background:#FFEDED;color:#E4728F;}
+.prog{height:8px;border-radius:99px;background:#F1ECF3;overflow:hidden;margin-top:8px;}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--pink));}
+
+/* ===================== 弹层 / Toast ===================== */
+.mask{position:fixed;inset:0;z-index:50;background:rgba(75,68,83,.35);display:flex;align-items:flex-end;justify-content:center;}
+.sheet{
+  width:100%;max-width:520px;max-height:86vh;overflow:auto;background:#fff;
+  border-radius:24px 24px 0 0;padding:8px 16px calc(20px + env(safe-area-inset-bottom));
+  animation:up .22s ease;
+}
+@keyframes up{from{transform:translateY(30px);opacity:.4}to{transform:translateY(0);opacity:1}}
+.sheet-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 0 12px;position:sticky;top:0;background:#fff;}
+.sheet-bar span{font-size:16px;font-weight:700;}
+.sheet-bar button{width:28px;height:28px;border-radius:50%;background:#F7F2F6;color:var(--muted);}
+.imgpick{
+  width:100%;height:120px;border-radius:18px;background:#FFF9FB center/cover no-repeat;
+  border:1.5px dashed var(--line);display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:13px;margin-bottom:10px;
+}
+.toast{
+  position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(12px);
+  background:rgba(75,68,83,.92);color:#fff;padding:10px 16px;border-radius:99px;font-size:13px;
+  z-index:99;opacity:0;transition:.22s;pointer-events:none;max-width:80%;text-align:center;
+}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+
+<body data-page-node-id="qHjfPHzryQeMenB2Tqb2sU">
+
+<div class="app" data-page-node-id="Cm11nFGu88H8cO1HJqoBZQ">
+  <header class="topbar" data-page-node-id="1vFtP5XGpr5EA3LDzYE2nw">
+    <svg class="logo" viewBox="0 0 64 64" data-page-node-id="jXiJbkE7oAUbPTxdEFjwwV"><circle cx="32" cy="34" r="22" fill="#FFD3DF" data-page-node-id="S1FnK8FCbZ7G5iBa8znjDw"/><circle cx="25" cy="30" r="3" fill="#5B4A55" data-page-node-id="7b3KHM6kRbzlQG0fOQqvLx"/><circle cx="39" cy="30" r="3" fill="#5B4A55" data-page-node-id="BBtWWvvmTa5N8m0VUZluPT"/><circle cx="20" cy="38" r="4" fill="#FFAEC6" opacity=".7" data-page-node-id="mV2EifG6ZUZBlkBXICBXwE"/><circle cx="44" cy="38" r="4" fill="#FFAEC6" opacity=".7" data-page-node-id="DYgGDaU6jDDe5A6UnpwY2p"/><path d="M26 40c3 3 9 3 12 0" stroke="#5B4A55" stroke-width="2.4" fill="none" stroke-linecap="round" data-page-node-id="zOpM5Hm6CFnH5bBhc30F5F"/><circle cx="32" cy="10" r="5" fill="#A9E5C8" data-page-node-id="jAiOFLNReLFszpmzAyrJLJ"/></svg>
+    <h1 data-page-node-id="WigdVRv8qEHil2D6M2LnEh">小圈 · 生活小本子</h1>
+    <span class="tag" id="topTag" data-page-node-id="QVOCslRrQ2JDQ5iMMK8jZw"></span>
+  </header>
+  <main id="view" data-page-node-id="ulqFxqx2cAoPFkBZrbw6VF"></main>
+</div>
+
+<nav class="tabbar" data-page-node-id="7d3IDpHm4VheEIpt3COAtC">
+  <button data-act="tab" data-r="home"    class="on" data-page-node-id="bXoyKhhs9JgLZsIGbRu62b"><span class="ic" data-page-node-id="1sn3CSS5IH1tAFoPkwRA2z">🏠</span>主页</button>
+  <button data-act="tab" data-r="recipe" data-page-node-id="A9ein97VAQM3cFdhjMTHMX"  ><span class="ic" data-page-node-id="uBvrqU2BNpnTxTEN3huysl">🍰</span>食谱</button>
+  <button data-act="tab" data-r="money" data-page-node-id="UWhYDvoa24l6cekqLPbQp7"   ><span class="ic" data-page-node-id="bD5wXHo80mUFgK8jtrePXd">💰</span>记账</button>
+  <button data-act="tab" data-r="english" data-page-node-id="YkCiV8TUqwmQsqja2dBMBN" ><span class="ic" data-page-node-id="KXcv2ci47Nh1VBYQ2ryARo">📖</span>英语</button>
+</nav>
+
+<!-- 通用底部弹层 -->
+<div class="mask hidden" id="mask" data-page-node-id="GvFEw3ysrjkU1H8BvGq1Ij">
+  <div class="sheet" data-page-node-id="hF1nCImnE1Gm0qF6YKFBLS">
+    <div class="sheet-bar" data-page-node-id="mcn79hfdpE3u139MvNLksM"><span id="sheetTitle" data-page-node-id="TmsiqDPZonVQYxrzEbZ1wR">标题</span><button data-act="sheetClose" data-page-node-id="Ka7A4aCo6IZxdsCrZYye7B">✕</button></div>
+    <div id="sheetBody" data-page-node-id="OwmWeGZkCk8HdPUVvOlnQM"></div>
+  </div>
+</div>
+
+<input type="file" id="filePick" accept="image/*" class="hidden" data-page-node-id="mLDcbKo5mHUGvWJMOmUwHB">
+<input type="file" id="jsonPick" accept="application/json,.json" class="hidden" data-page-node-id="5AOTu5UpsGSwv42QfMQ4q7">
+<div class="toast" id="toast" data-page-node-id="02KPjMCt9nSebTabBWkwww"></div>
+
+<script>
+/* =====================================================================
+   小圈 · 生活小本子  —— 纯前端 PWA（无后端 / 数据全部在 localStorage）
+   模块：① 主页（日历 / 纪念日倒计时 / 吉祥物小圈）
+        ② 食谱图鉴  ③ 记账  ④ 英语学习（含错词本）
+   每个模块底部都有「备份 & 恢复」入口（导出 / 导入 / 复制 / 清空）
+   ===================================================================== */
+
+/* ---------------------- 1. 小工具 ---------------------- */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.prototype.slice.call(r.querySelectorAll(s));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const pad = n => (n < 10 ? '0' : '') + n;
+const ymd = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const TODAY = () => ymd(new Date());
+const parseD = s => { const p = String(s).split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); };
+const DAY = 86400000;
+const diffDays = (a, b) => Math.round((parseD(b) - parseD(a)) / DAY);   // b - a，单位天
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+const money = n => (Number(n) || 0).toFixed(2);
+
+let toastTimer = null;
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('on');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('on'), 1900);
+}
+
+/* 图片压缩：上传前缩到最大 720px，避免 localStorage 爆容量 */
+function compressImg(file, max = 720){
+  return new Promise(resolve => {
+    const fr = new FileReader();
+    fr.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const s = Math.min(1, max / Math.max(img.width, img.height));
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        resolve(c.toDataURL('image/jpeg', 0.72));
+      };
+      img.onerror = () => resolve('');
+      img.src = fr.result;
+    };
+    fr.onerror = () => resolve('');
+    fr.readAsDataURL(file);
+  });
+}
+
+/* ---------------------- 2. 数据层（localStorage） ---------------------- */
+const KEY = 'xiaocuan_data_v1';
+function defaults(){
+  return {
+    version: 1,
+    days:   [],   // 纪念日 / 倒计时：{id,name,date,type:'memorial'|'countdown',yearly,img,show,note}
+    foods:  [],   // 自定义食物：{id,name,cat,img}
+    bills:  [],   // 记账：{id,type:'in'|'out',amount,cat,note,date}
+    wrong:  [],   // 错词本：{w,n,t}
+    learned:[],   // 已掌握单词
+    ui: {}        // 各模块的界面小状态
+  };
+}
+let DB = (function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(!raw) return defaults();
+    return Object.assign(defaults(), JSON.parse(raw));
+  }catch(e){ return defaults(); }
+})();
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(DB)); }
+  catch(e){ toast('保存失败：存储空间可能已满，删几张图片试试'); }
+}
+
+/* ---------------------- 3. 内置静态数据 ---------------------- */
+/* 内置食物（固定，不占存储） */
+const PRESET_FOODS = [
+  { id:'f1', name:'DQ 冰淇淋',  cat:'甜点', emoji:'🍦' },
+  { id:'f2', name:'蛋挞',       cat:'甜点', emoji:'🥧' },
+  { id:'f3', name:'双皮奶',     cat:'甜点', emoji:'🍮' },
+  { id:'f4', name:'提拉米苏',   cat:'甜点', emoji:'🍰' },
+  { id:'f5', name:'布丁',       cat:'甜点', emoji:'🍯' },
+
+  { id:'f6', name:'鸡公煲',     cat:'午饭', emoji:'🍲' },
+  { id:'f7', name:'冒尖尖冒菜', cat:'午饭', emoji:'🥘' },
+  { id:'f8', name:'塔斯汀',     cat:'午饭', emoji:'🍔' },
+  { id:'f9', name:'兰州拉面',   cat:'午饭', emoji:'🍜' },
+  { id:'f10',name:'麻辣烫',     cat:'午饭', emoji:'🍢' },
+  { id:'f11',name:'煲仔饭',     cat:'午饭', emoji:'🍚' },
+
+  { id:'f12',name:'脆升升',     cat:'零食', emoji:'🥔' },
+  { id:'f13',name:'阿萨姆',     cat:'零食', emoji:'🧋' },
+  { id:'f14',name:'辣条',       cat:'零食', emoji:'🌶️' },
+  { id:'f15',name:'薯片',       cat:'零食', emoji:'🍟' },
+  { id:'f16',name:'关东煮',     cat:'零食', emoji:'🍡' },
+  { id:'f17',name:'果冻',       cat:'零食', emoji:'🍬' }
+];
+const CATS = ['甜点', '午饭', '零食'];
+const BILL_CATS = {
+  out: ['餐饮', '交通', '购物', '娱乐', '居住', '医疗', '其他'],
+  in:  ['工资', '红包', '兼职', '理财', '其他']
+};
+
+/* 单词库：word / 音标 / 释义 / 例句 + 翻译 */
+const WORDS = [
+  { w:'apple',      ph:'/ˈæpl/',      cn:'苹果',     en:'I eat an apple every morning.',        zh:'我每天早上吃一个苹果。' },
+  { w:'brave',      ph:'/breɪv/',     cn:'勇敢的',   en:'Be brave and try it again.',           zh:'勇敢一点，再试一次。' },
+  { w:'curious',    ph:'/ˈkjʊəriəs/', cn:'好奇的',   en:'The cat is curious about everything.', zh:'这只猫对什么都好奇。' },
+  { w:'dream',      ph:'/driːm/',     cn:'梦想',     en:'Never give up your dream.',            zh:'永远不要放弃你的梦想。' },
+  { w:'effort',     ph:'/ˈefət/',     cn:'努力',     en:'Your effort will pay off one day.',    zh:'你的努力总有一天会有回报。' },
+  { w:'friend',     ph:'/frend/',     cn:'朋友',     en:'A true friend is a treasure.',         zh:'真正的朋友是宝藏。' },
+  { w:'gentle',     ph:'/ˈdʒentl/',   cn:'温柔的',   en:'She has a gentle smile.',              zh:'她的笑容很温柔。' },
+  { w:'happy',      ph:'/ˈhæpi/',     cn:'快乐的',   en:'Happy days are coming.',               zh:'快乐的日子就要来了。' },
+  { w:'imagine',    ph:'/ɪˈmædʒɪn/',  cn:'想象',     en:'Imagine a world full of kindness.',    zh:'想象一个充满善意的世界。' },
+  { w:'journey',    ph:'/ˈdʒɜːni/',   cn:'旅程',     en:'Life is a long journey.',              zh:'人生是一段漫长的旅程。' },
+  { w:'kind',       ph:'/kaɪnd/',     cn:'善良的',   en:'Please be kind to yourself.',          zh:'请对自己温柔一点。' },
+  { w:'laugh',      ph:'/lɑːf/',      cn:'笑',       en:'We laugh together every day.',         zh:'我们每天一起大笑。' },
+  { w:'memory',     ph:'/ˈmeməri/',   cn:'记忆',     en:'This photo brings back a sweet memory.',zh:'这张照片勾起一段甜蜜的回忆。' },
+  { w:'nature',     ph:'/ˈneɪtʃə(r)/',cn:'自然',     en:'I love the beauty of nature.',         zh:'我喜欢大自然的美。' },
+  { w:'patient',    ph:'/ˈpeɪʃnt/',   cn:'耐心的',   en:'Be patient, good things take time.',   zh:'耐心点，好东西需要时间。' },
+  { w:'quiet',      ph:'/ˈkwaɪət/',   cn:'安静的',   en:'The library is very quiet.',           zh:'图书馆非常安静。' },
+  { w:'relax',      ph:'/rɪˈlæks/',   cn:'放松',     en:'Let us relax after work.',             zh:'下班后我们放松一下吧。' },
+  { w:'smile',      ph:'/smaɪl/',     cn:'微笑',     en:'Your smile is so cute.',               zh:'你的微笑好可爱。' },
+  { w:'tomorrow',   ph:'/təˈmɒrəʊ/',  cn:'明天',     en:'Tomorrow is another day.',             zh:'明天又是新的一天。' },
+  { w:'travel',     ph:'/ˈtrævl/',    cn:'旅行',     en:'I want to travel around the world.',   zh:'我想环游世界。' },
+  { w:'unusual',    ph:'/ʌnˈjuːʒuəl/',cn:'不寻常的', en:'What an unusual idea!',                zh:'多么不寻常的想法！' },
+  { w:'victory',    ph:'/ˈvɪktəri/',  cn:'胜利',     en:'We celebrated our victory.',           zh:'我们庆祝了我们的胜利。' },
+  { w:'wonder',     ph:'/ˈwʌndə(r)/', cn:'想知道',   en:'I wonder where she is now.',           zh:'我想知道她现在在哪。' },
+  { w:'yesterday',  ph:'/ˈjestədeɪ/', cn:'昨天',     en:'Yesterday was a busy day.',            zh:'昨天是忙碌的一天。' }
+];
+
+/* 小圈的话 */
+const MASCOT_LINES = [
+  '今天也要开开心心的呀 ~',
+  '喝口水，休息一下眼睛吧！',
+  '你已经做得很好啦，别急 ~',
+  '要不要去记两个单词？我陪你！',
+  '咕噜咕噜……该吃饭啦 🍚',
+  '别忘了记账哦，钱包要盯紧！',
+  '深呼吸三次，烦恼飞走 ~',
+  '我在呢，点我聊聊也可以呀。',
+  '小目标一点点来，都会实现的！',
+  '今天想吃什么？让我帮你抽一个 ~'
+];
+const MASCOT_SVG = `<svg class="mascot" viewBox="0 0 120 120" data-act="mascot" aria-label="小圈">
+  <ellipse cx="60" cy="112" rx="30" ry="5" fill="#000" opacity=".06"/>
+  <circle cx="60" cy="66" r="42" fill="#FFD3DF"/>
+  <circle cx="60" cy="66" r="42" fill="none" stroke="#FFB8CD" stroke-width="2"/>
+  <circle cx="26" cy="34" r="9" fill="#A9E5C8"/>
+  <circle cx="94" cy="34" r="9" fill="#8FD3F4"/>
+  <circle cx="45" cy="60" r="5.5" fill="#5B4A55"/>
+  <circle cx="75" cy="60" r="5.5" fill="#5B4A55"/>
+  <circle cx="47" cy="58" r="1.8" fill="#fff"/>
+  <circle cx="77" cy="58" r="1.8" fill="#fff"/>
+  <circle cx="34" cy="72" r="6" fill="#FFAEC6" opacity=".65"/>
+  <circle cx="86" cy="72" r="6" fill="#FFAEC6" opacity=".65"/>
+  <path d="M50 76c5 5 15 5 20 0" stroke="#5B4A55" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle cx="60" cy="20" r="7" fill="#A9E5C8"/>
+  <rect x="58.5" y="20" width="3" height="10" rx="1.5" fill="#8AD3B4"/>
+</svg>`;
+
+/* ---------------------- 4. 路由 & 返回键 ---------------------- */
+const ROUTES = ['home', 'recipe', 'money', 'english'];
+let route = 'home';
+let exitArmed = false;
+
+function go(r, push){
+  if(!ROUTES.includes(r)) r = 'home';
+  route = r;
+  if(push) history.pushState({ r: r }, '', '#' + r);
+  $$('.tabbar button').forEach(b => b.classList.toggle('on', b.dataset.r === r));
+  $('#topTag').textContent = { home:'今天 ' + TODAY(), recipe:'今天吃什么？', money:'收支小账本', english:'每天一点点' }[r];
+  render();
+  window.scrollTo(0, 0);
+}
+function render(){
+  const v = $('#view');
+  v.innerHTML = ({ home: viewHome, recipe: viewRecipe, money: viewMoney, english: viewEnglish })[route]();
+}
+/* 手机返回键：优先在应用内路由回退；已经在首页时，需要连按两次才允许离开（不会一按就跳回浏览器） */
+window.addEventListener('popstate', () => {
+  const st = history.state || {};
+  if(st.m){ return; }            // 弹层内部状态，无需处理
+  closeSheet(true);
+  if(st.guard && exitArmed){     // 第二次点击返回 → 真正离开
+    exitArmed = false;
+    if(history.length > 1) history.go(-1);
+    return;
+  }
+  if(!ROUTES.includes(st.r)){    // 已经退到应用之外 → 拉回应用内
+    history.pushState({ r: route, guard: 1 }, '', '#' + route);
+    exitArmed = true;
+    toast('再按一次返回键离开小圈 ~');
+    setTimeout(() => { exitArmed = false; }, 2500);
+    return;
+  }
+  go(st.r, false);
+});
+
+/* ---------------------- 5. 弹层 ---------------------- */
+let sheetOpen = false;
+function openSheet(title, html, onMount){
+  $('#sheetTitle').textContent = title;
+  $('#sheetBody').innerHTML = html;
+  $('#mask').classList.remove('hidden');
+  sheetOpen = true;
+  history.pushState({ r: route, m: 1 }, '');
+  if(onMount) onMount($('#sheetBody'));
+}
+function closeSheet(fromPop){
+  if(!sheetOpen) return;
+  $('#mask').classList.add('hidden');
+  $('#sheetBody').innerHTML = '';
+  sheetOpen = false;
+  if(!fromPop) history.back();     // 保持历史栈干净：关闭 = 回退一步
+}
+/* 自定义确认框（比原生 confirm 可爱一点） */
+function confirmBox(title, text, onYes, yesText){
+  openSheet(title, `<p style="margin:0 0 14px;font-size:14px;color:#6B6478">${esc(text)}</p>
+    <div class="btnrow"><button class="btn ghost" data-act="sheetClose">取消</button>
+    <button class="btn" data-act="confirmYes">${esc(yesText || '确定')}</button></div>`,
+    body => { body.querySelector('[data-act=confirmYes]').onclick = () => { closeSheet(); onYes && onYes(); }; });
+}
+
+/* ---------------------- 6. 备份 / 恢复（所有模块共用） ---------------------- */
+function backupCard(){
+  return `<section class="card soft">
+    <div class="row between"><h3>💾 备份 & 恢复</h3><span class="chip">全部模块数据</span></div>
+    <p class="tip">数据只存在这台设备的浏览器里。清理缓存、换手机前，记得先导出一份 JSON 备份。</p>
+    <div class="btnrow">
+      <button class="btn" data-act="export">导出 JSON</button>
+      <button class="btn ghost" data-act="import">导入恢复</button>
+      <button class="btn ghost" data-act="copyBackup">复制备份文本</button>
+      <button class="btn danger" data-act="clear">清空数据</button>
+    </div>
+  </section>`;
+}
+function doExport(){
+  const txt = JSON.stringify(DB, null, 2);
+  const blob = new Blob([txt], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = '小圈备份-' + TODAY() + '.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+  toast('备份已导出 ~');
+}
+function doCopy(){
+  const txt = JSON.stringify(DB);
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(() => toast('已复制，粘贴到备忘录保存吧'), () => toast('复制失败，请用导出文件'));
+  }else{
+    toast('当前环境不支持复制，请用「导出 JSON」');
+  }
+}
+function doImport(file){
+  const fr = new FileReader();
+  fr.onload = () => {
+    let data;
+    try{ data = JSON.parse(fr.result); }
+    catch(e){ return toast('文件不是合法的 JSON'); }
+    if(typeof data !== 'object' || !data) return toast('文件内容不正确');
+    openSheet('导入备份', `<p style="margin:0 0 12px;font-size:14px;color:#6B6478">
+        检测到备份文件（纪念日 ${(data.days||[]).length} 条 / 自定义食物 ${(data.foods||[]).length} 条 / 账单 ${(data.bills||[]).length} 条 / 错词 ${(data.wrong||[]).length} 条）。<br>请选择导入方式：</p>
+      <div class="field"><button class="btn full" data-act="importMerge">合并导入（保留现有数据）</button></div>
+      <div class="field"><button class="btn ghost full" data-act="importReplace">覆盖导入（替换现有数据）</button></div>`,
+      body => {
+        body.querySelector('[data-act=importMerge]').onclick = () => { mergeData(data); closeSheet(); toast('合并完成 ~'); go(route, false); };
+        body.querySelector('[data-act=importReplace]').onclick = () => {
+          DB = Object.assign(defaults(), data); save(); closeSheet(); toast('已覆盖导入 ~'); go(route, false);
+        };
+      });
+  };
+  fr.readAsText(file);
+}
+function mergeData(d){
+  const has = (arr, k, v) => arr.some(x => x[k] === v);
+  (d.days || []).forEach(x => { if(!has(DB.days, 'id', x.id)) DB.days.push(x); });
+  (d.foods || []).forEach(x => { if(!has(DB.foods, 'id', x.id)) DB.foods.push(x); });
+  (d.bills || []).forEach(x => { if(!has(DB.bills, 'id', x.id)) DB.bills.push(x); });
+  (d.wrong || []).forEach(x => {
+    const f = DB.wrong.find(y => y.w === x.w);
+    if(f) f.n = Math.max(f.n, x.n || 1); else DB.wrong.push(x);
+  });
+  (d.learned || []).forEach(w => { if(!DB.learned.includes(w)) DB.learned.push(w); });
+  save();
+}
+function doClear(){
+  confirmBox('清空全部数据？', '所有纪念日、食物、账单、错词都会被删除，且无法恢复。建议先导出备份。', () => {
+    DB = defaults(); save(); render(); toast('已清空，一切重新开始 ~');
+  }, '狠心清空');
+}
+
+/* ---------------------- 7. 主页：日历 + 纪念日/倒计时 + 小圈 ---------------------- */
+const cal = { y: new Date().getFullYear(), m: new Date().getMonth(), sel: TODAY() };
+const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
+
+function viewHome(){
+  return `
+  <section class="card hi">
+    <div>
+      <h2>你好呀 ~</h2>
+      <p class="tip" style="margin-top:2px">${esc(hiText())}</p>
+    </div>
+    ${MASCOT_SVG}
+  </section>
+  <div id="bubble" class="bubble hidden"></div>
+
+  <section class="card">
+    <div class="cal-head">
+      <button data-act="calPrev">‹</button>
+      <span class="ym">${cal.y} 年 ${cal.m + 1} 月</span>
+      <button data-act="calNext">›</button>
+    </div>
+    <div class="cal-week">${WEEK.map(w => `<div>${w}</div>`).join('')}</div>
+    <div class="cal-grid">${calCells()}</div>
+    <div class="row between mt12">
+      <h3 style="font-size:14px">${cal.m + 1} 月 ${Number(cal.sel.split('-')[2])} 日</h3>
+      <button class="btn mini" data-act="addDay">+ 加纪念日</button>
+    </div>
+    <div class="list">${selDayList()}</div>
+  </section>
+
+  <section class="card">
+    <div class="row between"><h3>🎀 我的纪念日 & 倒计时</h3>
+      <span class="chip">${DB.days.length} 条</span></div>
+    <div class="list mt8">${allDaysList()}</div>
+  </section>
+
+  ${installCard()}
+  ${backupCard()}`;
+}
+function hiText(){
+  const h = new Date().getHours();
+  if(h < 6)  return '夜深啦，早点睡，小圈陪你 ~';
+  if(h < 11) return '早上好！今天也要元气满满 ✨';
+  if(h < 14) return '中午啦，记得好好吃饭 🍚';
+  if(h < 18) return '下午好，喝口水休息一下 ~';
+  return '晚上好，今天过得怎么样？';
+}
+function calCells(){
+  const start = new Date(cal.y, cal.m, 1).getDay();
+  const total = new Date(cal.y, cal.m + 1, 0).getDate();
+  let html = '';
+  for(let i = 0; i < start; i++) html += '<div class="cell empty"></div>';
+  for(let d = 1; d <= total; d++){
+    const ds = ymd(new Date(cal.y, cal.m, d));
+    const has = DB.days.some(x => x.date === ds) ||
+      DB.days.some(x => x.yearly && x.type === 'memorial' && parseD(x.date).getMonth() === cal.m && parseD(x.date).getDate() === d);
+    html += `<div class="cell ${ds === TODAY() ? 'today' : ''} ${ds === cal.sel ? 'sel' : ''}"
+      data-act="pickDate" data-date="${ds}"><span>${d}</span>${has ? '<i class="dot"></i>' : ''}</div>`;
+  }
+  return html;
+}
+function selDayList(){
+  const list = DB.days.filter(x => x.date === cal.sel);
+  if(!list.length) return '<div class="empty">这一天还没有记录，点右上角添加 ~</div>';
+  return list.map(dayItem).join('');
+}
+function allDaysList(){
+  if(!DB.days.length) return '<div class="empty">还没有纪念日，添加一个吧 ~</div>';
+  return DB.days.slice().sort((a, b) => a.date < b.date ? -1 : 1).map(dayItem).join('');
+}
+function dayText(d){
+  const t = TODAY();
+  const n = diffDays(t, d.date);            // 正数：还有几天；负数：已过去
+  if(n > 0)  return `还有 <b>${n}</b> 天 · ${d.date}`;
+  if(n === 0) return `<b>就是今天！</b> · ${d.date}`;
+  const passed = -n;
+  let extra = '';
+  if(d.type === 'memorial' && d.yearly){    // 纪念日可选「每年重复」，算下一个周年
+    const src = parseD(d.date);
+    let next = new Date(parseD(t).getFullYear(), src.getMonth(), src.getDate());
+    if(ymd(next) < t) next.setFullYear(next.getFullYear() + 1);
+    extra = ` · 距离 ${next.getFullYear() - src.getFullYear()} 周年还有 ${diffDays(t, ymd(next))} 天`;
+  }
+  return `已经过去 <b>${passed}</b> 天 · ${d.date}${extra}`;
+}
+function dayItem(d){
+  return `<div class="item" data-id="${d.id}">
+    <div class="thumb ${d.type === 'countdown' ? 'b' : ''}" ${d.img ? `style="background-image:url(${d.img})"` : ''}>
+      ${d.img ? '' : (d.type === 'countdown' ? '⏳' : '🎀')}</div>
+    <div class="grow">
+      <div class="t">${esc(d.name)}<span class="chip ${d.type === 'countdown' ? 'b' : ''}">${d.type === 'countdown' ? '倒计时' : '纪念日'}</span></div>
+      <div class="s">${dayText(d)}</div>
+      <div class="item-foot">
+        <label class="sw"><input type="checkbox" data-act="toggleShow" ${d.show ? 'checked' : ''}><i></i>主页展示</label>
+        <button class="link" data-act="editDay">编辑</button>
+        <button class="link del" data-act="delDay">删除</button>
+      </div>
+    </div>
+  </div>`;
+}
+function dayForm(d){
+  d = d || { id:'', name:'', date: cal.sel, type:'memorial', yearly:true, img:'', show:true, note:'' };
+  return `
+    <div class="imgpick" data-act="pickImg" ${d.img ? `style="background-image:url(${d.img})"` : ''}>
+      ${d.img ? '' : '📷 点这里上传图片（可选）'}</div>
+    <div class="field"><label>名字</label><input type="text" id="fName" value="${esc(d.name)}" placeholder="例如：恋爱纪念日 / 考试倒计时"></div>
+    <div class="field"><label>日期</label><input type="date" id="fDate" value="${d.date}"></div>
+    <div class="field"><label>类型</label>
+      <div class="seg" id="fType">
+        <button data-v="memorial" class="${d.type === 'memorial' ? 'on' : ''}">纪念日</button>
+        <button data-v="countdown" class="${d.type === 'countdown' ? 'on' : ''}">倒计时</button>
+      </div></div>
+    <div class="field"><label>备注（可选）</label><input type="text" id="fNote" value="${esc(d.note || '')}" placeholder="写点什么吧 ~"></div>
+    <label class="sw" style="margin:6px 0 14px"><input type="checkbox" id="fYearly" ${d.yearly ? 'checked' : ''}><i></i>每年重复（纪念日周年提醒）</label>
+    <label class="sw" style="margin:6px 0 14px;display:flex"><input type="checkbox" id="fShow" ${d.show ? 'checked' : ''}><i></i>在主页展示</label>
+    <button class="btn full" data-act="saveDay" data-id="${d.id}">保存</button>`;
+}
+function saveDay(id){
+  const name = $('#fName').value.trim();
+  const date = $('#fDate').value;
+  if(!name) return toast('给它取个名字吧 ~');
+  if(!date) return toast('请选择日期');
+  const item = {
+    id: id || uid(), name, date,
+    type: $('#fType .on').dataset.v,
+    yearly: $('#fYearly').checked,
+    show: $('#fShow').checked,
+    note: $('#fNote').value.trim(),
+    img: curImg
+  };
+  if(id){ const i = DB.days.findIndex(x => x.id === id); DB.days[i] = Object.assign({}, DB.days[i], item); }
+  else DB.days.push(item);
+  save(); closeSheet(); render(); toast(id ? '已更新 ~' : '添加成功 ~');
+}
+function installCard(){
+  if(!deferredPrompt) return '';
+  return `<section class="card soft">
+    <div class="row between"><h3>📱 添加到手机桌面</h3></div>
+    <p class="tip">添加后打开没有浏览器地址栏，就像一个独立 App。</p>
+    <div class="btnrow"><button class="btn full" data-act="install">添加到桌面</button></div>
+  </section>`;
+}
+
+/* ---------------------- 8. 食谱图鉴 ---------------------- */
+let recipeCat = '午饭';
+let lastRoll = null;
+function foodsOf(cat){
+  return PRESET_FOODS.filter(f => f.cat === cat)
+    .concat(DB.foods.filter(f => f.cat === cat));
+}
+function viewRecipe(){
+  const list = foodsOf(recipeCat);
+  return `
+  <section class="card">
+    <div class="chips">${CATS.map(c => `<button data-act="recipeCat" data-v="${c}" class="${c === recipeCat ? 'on' : ''}">${c}</button>`).join('')}</div>
+    <div class="roll mt12">
+      ${lastRoll ? rollHTML(lastRoll) : `<div style="font-size:44px">🎲</div>
+        <div class="res">今天吃点什么？</div><p class="tip">在「${recipeCat}」里随机抽一个</p>`}
+      <div class="btnrow" style="margin-top:14px">
+        <button class="btn big" data-act="roll">${lastRoll ? '换一个' : '帮我抽！'}</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="row between"><h3>📒 ${recipeCat}图鉴</h3>
+      <button class="btn mini" data-act="addFood">+ 新增</button></div>
+    <div class="foodgrid">
+      ${list.map(f => `<div class="food">
+        <div class="fi" ${f.img ? `style="background-image:url(${f.img})"` : ''}>${f.img ? '' : (f.emoji || '🍽️')}</div>
+        ${esc(f.name)}
+        ${DB.foods.some(x => x.id === f.id) ? `<button class="x" data-act="delFood" data-id="${f.id}">✕</button>` : ''}
+      </div>`).join('')}
+    </div>
+  </section>
+  ${backupCard()}`;
+}
+function rollHTML(f){
+  return `<div class="resimg" ${f.img ? `style="background-image:url(${f.img})"` : ''}>${f.img ? '' : (f.emoji || '🍽️')}</div>
+    <div class="res">${esc(f.name)}</div><p class="tip">就吃这个吧 ~</p>`;
+}
+function foodForm(){
+  return `
+    <div class="imgpick" data-act="pickImg">📷 点这里上传图片（可选）</div>
+    <div class="field"><label>食物名称</label><input type="text" id="ffName" placeholder="例如：楼下的牛肉面"></div>
+    <div class="field"><label>分类</label>
+      <div class="seg" id="ffCat">${CATS.map((c, i) => `<button data-v="${c}" class="${c === recipeCat ? 'on' : ''}">${c}</button>`).join('')}</div></div>
+    <button class="btn full" data-act="saveFood">保存</button>`;
+}
+
+/* ---------------------- 9. 记账 ---------------------- */
+let billType = 'out', billCat = '餐饮', billRange = 'month';
+function viewMoney(){
+  const now = new Date(), prefix = now.getFullYear() + '-' + pad(now.getMonth() + 1);
+  const list = DB.bills.filter(b => billRange === 'month' ? b.date.slice(0, 7) === prefix : true)
+    .slice().sort((a, b) => a.date < b.date ? 1 : (a.date > b.date ? -1 : 0));
+  let income = 0, outcome = 0;
+  list.forEach(b => { if(b.type === 'in') income += Number(b.amount) || 0; else outcome += Number(b.amount) || 0; });
+  const pct = income + outcome > 0 ? Math.round(outcome / (income + outcome) * 100) : 0;
+
+  return `
+  <section class="card">
+    <div class="row between" style="margin-bottom:10px">
+      <h3>💰 收支统计</h3>
+      <div class="seg" style="width:150px">
+        <button data-act="range" data-v="month" class="${billRange === 'month' ? 'on' : ''}">本月</button>
+        <button data-act="range" data-v="all" class="${billRange === 'all' ? 'on' : ''}">全部</button>
+      </div>
+    </div>
+    <div class="sum">
+      <div><div class="n in">+${money(income)}</div><div class="l">收入</div></div>
+      <div><div class="n out">-${money(outcome)}</div><div class="l">支出</div></div>
+      <div><div class="n">${money(income - outcome)}</div><div class="l">结余</div></div>
+    </div>
+    <div class="bar"><i style="width:${pct}%"></i></div>
+    <p class="tip">支出占总流水 ${pct}%（共 ${list.length} 笔）</p>
+  </section>
+
+  <section class="card">
+    <h3>✍️ 记一笔</h3>
+    <div class="seg mt8" id="bType">
+      <button data-v="out" class="${billType === 'out' ? 'on' : ''}">支出</button>
+      <button data-v="in" class="${billType === 'in' ? 'on' : ''}">收入</button>
+    </div>
+    <div class="field mt12"><label>金额（元）</label>
+      <input type="number" inputmode="decimal" step="0.01" id="bAmount" placeholder="0.00"></div>
+    <div class="field"><label>分类</label>
+      <div class="chips" id="bCat">${BILL_CATS[billType].map(c => `<button data-v="${c}" class="${c === billCat ? 'on' : ''}">${c}</button>`).join('')}</div></div>
+    <div class="field"><label>备注</label><input type="text" id="bNote" placeholder="例如：和小圈吃火锅"></div>
+    <div class="field"><label>日期</label><input type="date" id="bDate" value="${TODAY()}"></div>
+    <button class="btn full" data-act="addBill">保存这一笔</button>
+  </section>
+
+  <section class="card">
+    <div class="row between"><h3>🧾 明细</h3><span class="chip">${list.length} 笔</span></div>
+    <div class="list mt8">${list.length ? list.map(billItem).join('') : '<div class="empty">还没有记录，记一笔吧 ~</div>'}</div>
+  </section>
+  ${backupCard()}`;
+}
+function billItem(b){
+  return `<div class="item" data-id="${b.id}">
+    <div class="thumb ${b.type === 'in' ? 'm' : 'y'}">${b.type === 'in' ? '💵' : '🧾'}</div>
+    <div class="grow">
+      <div class="t">${esc(b.cat)}<span class="chip ${b.type === 'in' ? 'm' : 'y'}">${b.type === 'in' ? '收入' : '支出'}</span></div>
+      <div class="s">${b.date}${b.note ? ' · ' + esc(b.note) : ''}</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-weight:800" class="${b.type === 'in' ? 'in' : 'out'}">${b.type === 'in' ? '+' : '-'}${money(b.amount)}</div>
+      <button class="link del" data-act="delBill">删除</button>
+    </div>
+  </div>`;
+}
+
+/* ---------------------- 10. 英语学习 ---------------------- */
+let eng = { mode: 'card', idx: 0, flip: false, q: null, picked: '' };
+function viewEnglish(){
+  const total = WORDS.length, learned = DB.learned.length;
+  const pct = Math.round(learned / total * 100);
+  return `
+  <section class="card">
+    <div class="row between"><h3>📖 学习进度</h3><span class="chip">${learned} / ${total}</span></div>
+    <div class="prog"><i style="width:${pct}%"></i></div>
+    <div class="seg mt12" id="eMode">
+      <button data-v="card"  class="${eng.mode === 'card' ? 'on' : ''}">背单词</button>
+      <button data-v="quiz"  class="${eng.mode === 'quiz' ? 'on' : ''}">测一测</button>
+      <button data-v="wrong" class="${eng.mode === 'wrong' ? 'on' : ''}">错词本 ${DB.wrong.length ? '(' + DB.wrong.length + ')' : ''}</button>
+    </div>
+  </section>
+  <section class="card">${engBody()}</section>
+  ${backupCard()}`;
+}
+function engBody(){
+  if(eng.mode === 'card')  return engCard();
+  if(eng.mode === 'quiz')  return engQuiz();
+  return engWrong();
+}
+function engCard(){
+  const w = WORDS[eng.idx];
+  return `<div class="wcard">
+    <div class="w">${w.w}</div><div class="ph">${w.ph}</div>
+    ${eng.flip ? `<div class="cn">${w.cn}</div>
+      <div class="ex">${w.en}<small>${w.zh}</small></div>` : `<p class="tip" style="margin-top:14px">想一想它的意思 ~</p>`}
+  </div>
+  <div class="btnrow">
+    <button class="btn ghost" data-act="engPrev">上一个</button>
+    <button class="btn" data-act="engFlip">${eng.flip ? '盖住' : '看释义'}</button>
+    <button class="btn ghost" data-act="engNext">下一个</button>
+  </div>
+  <div class="btnrow"><button class="btn ghost" data-act="engKnow">✅ 记住了（标记已掌握）</button></div>
+  <p class="tip" style="text-align:center">第 ${eng.idx + 1} / ${WORDS.length} 个</p>`;
+}
+function makeQuestion(pool){
+  const w = pool[Math.floor(Math.random() * pool.length)];
+  const opts = [w.cn];
+  while(opts.length < 4){
+    const c = WORDS[Math.floor(Math.random() * WORDS.length)].cn;
+    if(!opts.includes(c)) opts.push(c);
+  }
+  opts.sort(() => Math.random() - 0.5);
+  eng.q = { w, opts };
+  eng.picked = '';
+}
+function engQuiz(){
+  if(!eng.q) makeQuestion(WORDS);
+  const q = eng.q;
+  return `<div class="wcard">
+    <div class="w">${q.w.w}</div><div class="ph">${q.w.ph}</div>
+    <p class="tip" style="margin-top:10px">选出正确的中文意思</p>
+  </div>
+  <div class="mt12">
+    ${q.opts.map(o => `<button class="opt ${eng.picked ? (o === q.w.cn ? 'right' : (o === eng.picked ? 'wrong' : '')) : ''}"
+      data-act="engPick" data-v="${esc(o)}">${esc(o)}</button>`).join('')}
+  </div>
+  ${eng.picked ? `<p class="tip" style="text-align:center;margin-top:10px">
+      ${eng.picked === q.w.cn ? '答对啦！小圈给你鼓掌 👏' : '记错啦，已经放进错词本 ~'}
+      <br>${q.w.en}<br><small>${q.w.zh}</small></p>
+      <div class="btnrow"><button class="btn" data-act="engNextQ">下一题</button></div>` : ''}`;
+}
+function engWrong(){
+  if(!DB.wrong.length) return '<div class="empty">错词本是空的，说明你很棒 🌟</div>';
+  return `<div class="list">
+    ${DB.wrong.map(x => { const w = WORDS.find(y => y.w === x.w) || { w:x.w, ph:'', cn:'' };
+      return `<div class="item" data-w="${esc(x.w)}">
+        <div class="thumb b">🔁</div>
+        <div class="grow"><div class="t">${esc(w.w)} <span class="chip b">错 ${x.n} 次</span></div>
+          <div class="s">${esc(w.ph)} ${esc(w.cn)}</div></div>
+        <button class="link" data-act="wrongDrill">练它</button>
+        <button class="link del" data-act="wrongDel">移除</button>
+      </div>`; }).join('')}
+  </div>
+  <div class="btnrow"><button class="btn" data-act="wrongQuiz">开始错词练习</button></div>`;
+}
+
+/* ---------------------- 11. 事件统一处理 ---------------------- */
+let curImg = '';        // 弹层里当前选择的图片
+let pickCb = null;      // 图片选择回调
+
+const ACT = {
+  /* 底部导航 */
+  tab: el => { const r = el.dataset.r; if(r !== route) go(r, true); },
+
+  /* 弹层 */
+  sheetClose: () => closeSheet(),
+  pickImg: () => { pickCb = url => { curImg = url; const p = $('#sheetBody .imgpick'); if(p){ p.style.backgroundImage = 'url(' + url + ')'; p.textContent = ''; } }; $('#filePick').click(); },
+
+  /* 日历 */
+  calPrev: () => { cal.m--; if(cal.m < 0){ cal.m = 11; cal.y--; } render(); },
+  calNext: () => { cal.m++; if(cal.m > 11){ cal.m = 0; cal.y++; } render(); },
+  pickDate: el => { cal.sel = el.dataset.date; render(); },
+
+  /* 纪念日 */
+  addDay: () => { curImg = ''; openSheet('添加纪念日 / 倒计时', dayForm()); },
+  editDay: el => { const d = DB.days.find(x => x.id === el.closest('.item').dataset.id); curImg = d.img || ''; openSheet('编辑', dayForm(d)); },
+  saveDay: el => saveDay(el.dataset.id),
+  delDay: el => {
+    const id = el.closest('.item').dataset.id;
+    confirmBox('删除这条记录？', '删除后无法恢复哦。', () => { DB.days = DB.days.filter(x => x.id !== id); save(); render(); toast('已删除'); });
+  },
+  toggleShow: el => {
+    const d = DB.days.find(x => x.id === el.closest('.item').dataset.id);
+    d.show = el.checked; save(); toast(d.show ? '已显示在主页 ~' : '已从主页隐藏');
+  },
+  mascot: () => {
+    const b = $('#bubble');
+    b.textContent = '小圈：' + MASCOT_LINES[Math.floor(Math.random() * MASCOT_LINES.length)];
+    b.classList.remove('hidden');
+    clearTimeout(ACT._t); ACT._t = setTimeout(() => b.classList.add('hidden'), 3200);
+  },
+
+  /* 食谱 */
+  recipeCat: el => { recipeCat = el.dataset.v; lastRoll = null; render(); },
+  roll: () => { const l = foodsOf(recipeCat); lastRoll = l[Math.floor(Math.random() * l.length)]; render(); },
+  addFood: () => { curImg = ''; openSheet('新增食物', foodForm()); },
+  saveFood: () => {
+    const name = $('#ffName').value.trim();
+    if(!name) return toast('先写下它的名字 ~');
+    const cat = $('#ffCat .on').dataset.v;          // 先取值再关弹层（关弹层会清空表单 DOM）
+    DB.foods.push({ id: uid(), name, cat, img: curImg });
+    save(); closeSheet(); recipeCat = cat; render(); toast('已加入图鉴 ~');
+  },
+  delFood: el => {
+    const id = el.dataset.id;
+    confirmBox('删除这个食物？', '只会删除你自己添加的食物。', () => { DB.foods = DB.foods.filter(x => x.id !== id); save(); render(); toast('已删除'); });
+  },
+
+  /* 记账 */
+  range: el => { billRange = el.dataset.v; render(); },
+  addBill: () => {
+    const amount = parseFloat($('#bAmount').value);
+    if(!(amount > 0)) return toast('金额要大于 0 哦');
+    DB.bills.push({
+      id: uid(), type: billType, amount: amount.toFixed(2),
+      cat: billCat, note: $('#bNote').value.trim(), date: $('#bDate').value || TODAY()
+    });
+    save(); render(); toast('记好啦 ~');
+  },
+  delBill: el => {
+    const id = el.closest('.item').dataset.id;
+    confirmBox('删除这笔账？', '删除后统计也会变化。', () => { DB.bills = DB.bills.filter(x => x.id !== id); save(); render(); toast('已删除'); });
+  },
+
+  /* 英语 */
+  engFlip: () => { eng.flip = !eng.flip; render(); },
+  engPrev: () => { eng.idx = (eng.idx - 1 + WORDS.length) % WORDS.length; eng.flip = false; render(); },
+  engNext: () => { eng.idx = (eng.idx + 1) % WORDS.length; eng.flip = false; render(); },
+  engKnow: () => {
+    const w = WORDS[eng.idx].w;
+    if(!DB.learned.includes(w)){ DB.learned.push(w); save(); }
+    toast('真棒！已标记为掌握 ⭐'); render();
+  },
+  engPick: el => {
+    if(eng.picked) return;
+    eng.picked = el.dataset.v;
+    const w = eng.q.w;
+    if(eng.picked === w.cn){
+      if(!DB.learned.includes(w.w)) DB.learned.push(w.w);
+      DB.wrong = DB.wrong.filter(x => x.w !== w.w);
+    }else{
+      const f = DB.wrong.find(x => x.w === w.w);
+      if(f) f.n++; else DB.wrong.push({ w: w.w, n: 1, t: TODAY() });
+      DB.learned = DB.learned.filter(x => x !== w.w);
+    }
+    save(); render();
+  },
+  engNextQ: () => {
+    const pool = eng.wrongOnly ? WORDS.filter(x => DB.wrong.some(y => y.w === x.w)) : WORDS;
+    if(eng.picked === eng.q.w.cn && eng.wrongOnly){     // 错词练习答对 → 减一次，归零则移除
+      const f = DB.wrong.find(x => x.w === eng.q.w.w);
+      if(f){ f.n--; if(f.n <= 0) DB.wrong = DB.wrong.filter(y => y.w !== f.w); save(); }
+      if(!DB.wrong.length) eng.wrongOnly = false;
+    }
+    makeQuestion(pool.length ? pool : WORDS);
+    render();
+  },
+  wrongDrill: el => { eng.mode = 'quiz'; eng.wrongOnly = true; makeQuestion(WORDS.filter(x => x.w === el.closest('.item').dataset.w)); render(); },
+  wrongDel: el => { const w = el.closest('.item').dataset.w; DB.wrong = DB.wrong.filter(x => x.w !== w); save(); render(); toast('已移出错词本'); },
+  wrongQuiz: () => { eng.mode = 'quiz'; eng.wrongOnly = true; makeQuestion(WORDS.filter(x => DB.wrong.some(y => y.w === x.w))); render(); },
+
+  /* 备份 */
+  export: doExport,
+  import: () => $('#jsonPick').click(),
+  copyBackup: doCopy,
+  clear: doClear,
+
+  /* 安装到桌面 */
+  install: async () => {
+    if(!deferredPrompt) return toast('请用浏览器菜单里的「添加到主屏幕」');
+    deferredPrompt.prompt();
+    const r = await deferredPrompt.userChoice;
+    if(r && r.outcome === 'accepted') toast('添加成功 ~');
+    deferredPrompt = null; render();
+  }
+};
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-act]');
+  if(!t) return;
+  const fn = ACT[t.dataset.act];
+  if(fn) fn(t, e);
+});
+/* 表单里的分段选择（点哪段亮哪段） */
+document.addEventListener('click', e => {
+  const seg = e.target.closest('.seg');
+  if(!seg) return;
+  const btn = e.target.closest('.seg button');
+  if(!btn) return;
+  $$('.seg button', seg).forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  if(seg.id === 'bType'){                     // 记账：切换收支 → 刷新分类
+    billType = btn.dataset.v;
+    billCat = BILL_CATS[billType][0];
+    render();
+  }
+  if(seg.id === 'eMode'){
+    eng.mode = btn.dataset.v;
+    if(eng.mode === 'quiz'){ eng.wrongOnly = false; makeQuestion(WORDS); }
+    render();
+  }
+});
+/* 分类 chips（记账） */
+document.addEventListener('click', e => {
+  const b = e.target.closest('#bCat button');
+  if(!b) return;
+  billCat = b.dataset.v;
+  $$('#bCat button').forEach(x => x.classList.toggle('on', x === b));
+});
+/* 点遮罩关闭弹层 */
+$('#mask').addEventListener('click', e => { if(e.target.id === 'mask') closeSheet(); });
+/* 选图片 */
+$('#filePick').addEventListener('change', async e => {
+  const f = e.target.files[0]; if(!f) return;
+  const url = await compressImg(f);
+  if(url && pickCb) pickCb(url);
+  e.target.value = '';
+});
+/* 导入 JSON */
+$('#jsonPick').addEventListener('change', e => {
+  const f = e.target.files[0]; if(!f) return;
+  doImport(f); e.target.value = '';
+});
+
+/* ---------------------- 12. 启动 + PWA ---------------------- */
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; if(route === 'home') render(); });
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => { /* 本地 file:// 打开时会失败，属正常 */ });
+  });
+}
+/* 保持常亮的历史栈：进入时写入第一条应用状态，返回键才不会直接跳出 */
+(function boot(){
+  const h = (location.hash || '').replace('#', '');
+  route = ROUTES.includes(h) ? h : 'home';
+  history.replaceState({ r: route }, '', '#' + route);
+  go(route, false);
+})();
+</script>
+</body>
+</html>
